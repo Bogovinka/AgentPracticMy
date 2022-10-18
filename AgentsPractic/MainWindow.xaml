@@ -21,8 +21,8 @@
             </ComboBox>
             <ComboBox MaxHeight="50" FontFamily="Monotype Corsiva" FontSize="18" Margin="10,0,0,0" x:Name="filtCB" SelectionChanged="filtCB_SelectionChanged" Style="{StaticResource MaterialDesignFilledComboBox}">
                 <Label>Имя</Label>
-                <Label>Приоритет</Label>
-                <Label>Скидка</Label>
+                <Label>Тип</Label>
+                <Label>Телефон</Label>
             </ComboBox>
             <Button x:Name="addI" FontFamily="Monotype Corsiva" Margin="20,0,0,0" Click="addI_Click" Background="#FF46B29D" >Добавить агента</Button>
         </StackPanel>
