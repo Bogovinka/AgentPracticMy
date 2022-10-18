@@ -23,7 +23,15 @@ namespace AgentsPractic
         {
             InitializeComponent();
         }
-
+        public AddAgent(string type, string name, string phone, string priorit, string image)
+        {
+            InitializeComponent();
+            TypeT.Text = type;
+            NameT.Text = name;
+            PhoneT.Text = phone;
+            PriotityT.Text = priorit;
+            imageT.Text = image;
+        }
         private void createB_Click(object sender, RoutedEventArgs e)
         {
             if (TypeT.Text.Length > 0 && NameT.Text.Length > 0 && PhoneT.Text.Length > 0 && PriotityT.Text.Length > 0 && imageT.Text.Length > 0)

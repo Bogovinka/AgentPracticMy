@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AgentsPractic
 {
@@ -20,8 +21,8 @@ namespace AgentsPractic
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                string query = $"INSERT INTO agents(Type, Name, phone, Priority, image)" +
-                    $" VALUES (N'{type}', N'{name}', N'{phone}', N'{priort}', N'{image}')";
+                string query = $"INSERT INTO agents(Type, Name, phone, Priority, image, INN)" +
+                    $" VALUES (N'{type}', N'{name}', N'{phone}', N'{priort}', N'{image}', N'534534')";
                 SqlCommand command = new SqlCommand(query, connection);
                 // выполняем запрос
                 command.ExecuteNonQuery();
@@ -33,15 +34,15 @@ namespace AgentsPractic
             }
         }
 		//метод обновления данных БД
-        public void updateDB(string name, string ip, string mac, string type, string state, string adres, string note, string name_item, string login, string pass, string SNMP, string vlan, string ser, string mark, string model, string whereS)
+        public void updateDB(string type, string name, string phone, string priort, string image, string whereS)
         {
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                string query = $"UPDATE Equipment SET Name = N'{name}', IP = N'{ip}', MAC = N'{mac}', " +
-                    $"Device_Type = N'{type}', Conditions = N'{state}', Address = N'{adres}', Note = N'{note}', Name_Item = N'{name_item}', Login = N'{login}', Password = N'{pass}', SNMP = N'{SNMP}', Num_vlan = N'{vlan}', Serial_num = N'{ser}', Brand = N'{mark}', Model = N'{model}' " +
-                    $"WHERE Name_Item = N'{whereS}'";
+                string query = $"UPDATE agents SET Type = N'{type}', Name = N'{name}', phone = N'{phone}', " +
+                    $"Priority = N'{priort}', image = N'{image}'" +
+                    $"WHERE INN = N'{whereS}'";
                 SqlCommand command = new SqlCommand(query, connection);
                 // выполняем запрос
                 command.ExecuteNonQuery();
@@ -51,6 +52,34 @@ namespace AgentsPractic
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        //метод заполнение полей
+        public string[] editForm(string where)
+        {
+            string[] arr = new string[5];
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand sqlCom = new SqlCommand($"SELECT Type, Name, phone, Priority, image FROM agents WHERE INN = '{where}'", connection);
+                    connection.Open();
+                    SqlDataReader read = sqlCom.ExecuteReader();
+                    //заполнение объектов данными из запроса
+                    while (read.Read())
+                    {
+                        arr[0] = read.GetString(0).ToString();
+                        arr[1] = read.GetString(1).ToString();
+                        arr[2] = read.GetString(2).ToString();
+                        arr[3] = read.GetString(3).ToString();
+                        arr[4] = read.GetString(4).ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return arr;
         }
     }
 }

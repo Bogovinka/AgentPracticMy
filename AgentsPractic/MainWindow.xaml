@@ -6,25 +6,25 @@
         xmlns:local="clr-namespace:AgentsPractic"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="550" MinWidth="800">
+        Title="Список агентов" MinHeight="550" MinWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="19*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBox x:Name="searchT" FontSize="18" MaxHeight="50" Padding="10, 0, 0, 0" Margin="10" MinWidth="300" MaxWidth="300" KeyDown="searchT_KeyDown" Style="{StaticResource MaterialDesignFilledTextBox}" materialDesign:HintAssist.Hint="Найти"></TextBox>
-            <ComboBox MaxHeight="50" x:Name="sortCB" SelectionChanged="sortCB_Selected" Style="{StaticResource MaterialDesignFilledComboBox}">
+            <TextBox x:Name="searchT" FontFamily="Monotype Corsiva" FontSize="18" MaxHeight="50" Padding="10, 0, 0, 0" Margin="10" MinWidth="300" MaxWidth="300" KeyDown="searchT_KeyDown" Style="{StaticResource MaterialDesignFilledTextBox}" materialDesign:HintAssist.Hint="Найти"></TextBox>
+            <ComboBox MaxHeight="50" FontFamily="Monotype Corsiva" FontSize="18"  x:Name="sortCB" SelectionChanged="sortCB_Selected" Style="{StaticResource MaterialDesignFilledComboBox}">
                 <Label>Не сортировать</Label>
                 <Label>Сортировать по убыванию</Label>
                 <Label>Сортировать по возрастанию</Label>
             </ComboBox>
-            <ComboBox MaxHeight="50" x:Name="filtCB" SelectionChanged="filtCB_SelectionChanged" Style="{StaticResource MaterialDesignFilledComboBox}">
+            <ComboBox MaxHeight="50" FontFamily="Monotype Corsiva" FontSize="18" Margin="10,0,0,0" x:Name="filtCB" SelectionChanged="filtCB_SelectionChanged" Style="{StaticResource MaterialDesignFilledComboBox}">
                 <Label>Имя</Label>
                 <Label>Приоритет</Label>
                 <Label>Скидка</Label>
             </ComboBox>
-            <Button x:Name="addI" Margin="20,0,0,0" Click="addI_Click" >Добавить агента</Button>
+            <Button x:Name="addI" FontFamily="Monotype Corsiva" Margin="20,0,0,0" Click="addI_Click" Background="#FF46B29D" >Добавить агента</Button>
         </StackPanel>
         <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="sP">

@@ -59,13 +59,13 @@ namespace AgentsPractic
             string select;
 			//с сортировкой по убыванию
             if (order)
-                select = $"SELECT Type, Name, phone, image, Priority FROM agents WHERE Type LIKE N'%{search}%' OR Name LIKE N'%{search}%' OR phone LIKE N'%{search}%' OR Priority LIKE N'%{search}%' ORDER BY {filter} ASC";
+                select = $"SELECT Type, Name, phone, image, Priority, INN FROM agents WHERE Type LIKE N'%{search}%' OR Name LIKE N'%{search}%' OR phone LIKE N'%{search}%' OR Priority LIKE N'%{search}%' ORDER BY {filter} ASC";
             //с сортировкой по возростанию
 			else if (unorder)
-                select = $"SELECT Type, Name, phone, image, Priority FROM agents WHERE Type LIKE N'%{search}%' OR Name LIKE N'%{search}%' OR phone LIKE N'%{search}%' OR Priority LIKE N'%{search}%' ORDER BY {filter} DESC";
+                select = $"SELECT Type, Name, phone, image, Priority, INN FROM agents WHERE Type LIKE N'%{search}%' OR Name LIKE N'%{search}%' OR phone LIKE N'%{search}%' OR Priority LIKE N'%{search}%' ORDER BY {filter} DESC";
             //стандартный запрос без сортировки
 			else
-                select = $"SELECT Type, Name, phone, image, Priority FROM agents WHERE Type LIKE N'%{search}%' OR Name LIKE N'%{search}%' OR phone LIKE N'%{search}%' OR Priority LIKE N'%{search}%'";
+                select = $"SELECT Type, Name, phone, image, Priority, INN FROM agents WHERE Type LIKE N'%{search}%' OR Name LIKE N'%{search}%' OR phone LIKE N'%{search}%' OR Priority LIKE N'%{search}%'";
             return select;
         }
 		//метод создание списка агентов
@@ -88,6 +88,7 @@ namespace AgentsPractic
             StackPanel res;
             Button but;
             Grid gr;
+            var bc = new BrushConverter();
             string img;
             string select = CreateSelect(search, order, unorder, filter);
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -99,12 +100,15 @@ namespace AgentsPractic
 				//заполнение объектов данными из запроса
                 while (read.Read())
                 {
+
                     name = new Label();
                     name.Content = $"{read.GetString(0).ToString()} | {read.GetString(1).ToString()}";
                     name.FontSize = 24;
+                    name.FontFamily = new FontFamily("Monotype Corsiva");
                     phone = new Label();
                     phone.Content = read.GetString(2).ToString();
                     phone.FontSize = 18;
+                    phone.FontFamily = new FontFamily("Monotype Corsiva");
                     img = read.GetString(3).ToString();
                     image = new Image();
                     if (img != "нет")
@@ -116,6 +120,7 @@ namespace AgentsPractic
                     priorit = new Label();
                     priorit.Content = "Приоритетность: " + read.GetString(4).ToString();
                     priorit.FontSize = 18;
+                    priorit.FontFamily = new FontFamily("Monotype Corsiva");
                     border = new Border();
                     border.BorderBrush = Brushes.DarkGray;
                     border.BorderThickness = new Thickness(1.5, 1.5, 1.5, 1.5);
@@ -124,13 +129,18 @@ namespace AgentsPractic
                     but.Content = "Изменить";
                     but.Click += new RoutedEventHandler(Button_Click);
                     but.HorizontalAlignment = HorizontalAlignment.Right;
-                    but.Tag = read.GetString(1).ToString();
+                    if(read.GetString(5).ToString() != null) 
+                        but.Tag = read.GetString(5).ToString();
                     but.Margin = new Thickness(0, 0, 20, 0);
+                    but.Background = (Brush)bc.ConvertFrom("#46B29D");
+                    but.FontFamily = new FontFamily("Monotype Corsiva");
                     mainRes = new StackPanel();
                     mainRes.Orientation = Orientation.Horizontal;
                     mainRes.Children.Add(image);
                     sumP = new Label();
                     sumP.Content = SumP(read.GetString(1).ToString()) + " продаж за год";
+                    sumP.FontFamily = new FontFamily("Monotype Corsiva");
+                    sumP.FontSize = 18;
                     res = new StackPanel();
                     res.Children.Add(name);
                     res.Children.Add(sumP);
@@ -140,9 +150,11 @@ namespace AgentsPractic
                     procent.Content = CheckProcent(read.GetString(1).ToString());
                     procent.FontSize = 24;
                     procent.Margin = new Thickness(20);
+                    procent.FontFamily = new FontFamily("Monotype Corsiva");
                     mainRes.Children.Add(res);
                     mainRes.Children.Add(procent);
                     gr = new Grid();
+                    gr.Background = (Brush)bc.ConvertFrom("#C6D7FF");
                     gr.Children.Add(mainRes);
                     gr.Children.Add(but);
                     border.Child = gr;

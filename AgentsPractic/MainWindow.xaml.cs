@@ -29,7 +29,12 @@ namespace AgentsPractic
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
-            
+            string[] arr = wBD.editForm(b.Tag.ToString());
+            AddAgent c = new AddAgent(arr[0], arr[1], arr[2], arr[3], arr[4]);
+            if (c.ShowDialog() == true)
+            {
+                wBD.updateDB(c.TypeT.Text, c.NameT.Text, c.PhoneT.Text, c.PriotityT.Text, c.imageT.Text, b.Tag.ToString());
+            }
 
         }
         public MainWindow()
